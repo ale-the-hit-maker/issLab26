@@ -7,7 +7,7 @@
  <h2 id="ParteA">Parte A: Dai programmi ai Sistemi a Microservizi</h2>
 
  ### Sprint content index
- * [index](./)
+ * [index](https://ale-the-hit-maker.github.io/issLab26/)
 
  ### Sistema ConwayLife in locale
  [Riferimento: conway26Java Dai requisiti al deployment](https://anatali.github.io/issLab2026/Project%20conway26Java.html#conway26java-dai-requisiti-al-deployment)
