@@ -126,12 +126,11 @@ kc {
 pre {
     font-family: 'Monaco', 'Courier New', monospace;
     font-size: 0.9rem;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: transparent;
+    color: #2c3e50;
     border-radius: 8px;
     padding: 1.5rem;
     overflow-x: auto;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
     margin: 1rem 0;
     line-height: 1.5;
 }
