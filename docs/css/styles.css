@@ -238,6 +238,61 @@ div.imagedesc {
     text-align: center;
 }
 
+.footer {
+    background-color: rgba(86, 56, 253, 0.9);
+    color: white;
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-left, .footer-right {
+    flex: 1;
+    text-align: center;
+    min-width: 150px;
+}
+
+.footer-center {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-center img {
+    max-width: 150px;
+    height: auto;
+    margin: 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.footer a {
+    color: white;
+    border-bottom-color: white;
+}
+
+.footer a:hover {
+    color: #e0e0e0;
+    border-bottom-color: white;
+}
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-left, .footer-center, .footer-right {
+        flex: 1 1 100%;
+    }
+}
+
 @media (max-width: 768px) {
     body {
         padding: 1rem;

@@ -55,20 +55,144 @@
 
  
 <div class="remark">
-Copy here the EXACT text given by the customer.
+R1  Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
+    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
+    evolve come stabilito dallle regole di ConwayLife
+
+R2  L’utente umano deve poter:
+     - specificare la configurazione iniziale della griglia del gioco    
+     - vedere l’evoluzione del gioco in forma opportuna 
+        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
+     - fermare e far ripartire l’evoluzione del gioco
+     - pulire (a gioco fermo) la configurazione della griglia del gioco
 </div>
 
  
 
 <h2>Requirement analysis</h2>
  
+<b>Cosa intende il committente con la parola Cella?</b>
+<code>
+public interface ICell {
+    void setStatus(boolean v); <span class="comment">// Qualunque cosa sia una cella, esiste solo la rappresentazione della cella</span>
+    boolean isAlive(); <span class="comment">// La cella come entità ha la capacità di rispondere ad una query, che mi restituisce un valore, ossia vivo o morto.</span>
+    void switchCellState(); <span class="comment">// La cella è un ente che ha la capacità di, attraverso questo metodo, cambiare stato.</span>
+}
+</code>
+<b>Cosa intende il committente con la parola Griglia?</b>
+<code>
+public interface IGrid {
+      public int getRowsNum(); <span class="comment">//Per implementare getRowsNum devo conoscere com'è fatta internamente la griglia, ossia è primitiva.</span>
+      public int getColsNum();
+      public void setCellValue(int x, int y, boolean state); <span class="comment">// Non è un metodo indispensabile, ma è molto comodo avere un metodo che mi permette di modificare lo stato di una cella.</span>
+      public ICell getCell(int x, int y); <span class="comment">// è indispensabile avere un metodo che mi restituisce una cella.</span>
+      public boolean getCellValue(int x, int y);
+      public void reset(); <span class="comment">//Non è indispensabile, ma può essere opportuno avere un metodo che resetta gli stati dei componenti della griglia, ossia le celle a un valore default, ad esempio tutte le celle morte.</span>
+}
+</code>
 
+<br><br>
+<p>-------------------------------------------------------------------------</p>
+<br><br>
+
+<b>
+Test plan Cell:
+</b>
+<code>
+public class CellTest {
+private ICell c;
+
+    @Before
+    public void setup() {
+        System.out.println("ConwayLifeTest | setup");   
+        c = new Cell();
+    }
+    @After
+    public void down() {
+        System.out.println("ConwayLifeTest | down");
+    }
+    
+    @Test
+    public void testCellAlive() {
+        System.out.println("ConwayLifeTest | doing alive");
+        c.setStatus(true);
+        boolean r = c.isAlive();
+        assertTrue(r);
+        
+    }
+    
+    @Test
+    public void testCellDead() {
+        System.out.println("ConwayLifeTest | doing dead");
+        c.setStatus(false);
+        boolean r = c.isAlive();
+        assertTrue( !r);
+    }   
+}
+
+</code>
+
+<b>
+Test plan Grid:
+</b>
+<code>
+    public class GridTest {
+    private static final int nRows=5;
+    private static final int nCols=5;
+    
+private Grid grid;
+
+    @Before
+    public void setup() {
+        System.out.println("GridTest | setup"); 
+        grid= new Grid(nRows,nCols);
+    }
+    @After
+    public void down() {
+        System.out.println("GridTest | down");
+    }
+    
+    @Test
+    public void testDims() {
+        System.out.println("testDims ---------------------" );
+        int nr = grid.getRowsNum();
+        int nc = grid.getColsNum();
+        assertTrue( nr==nRows && nc==nCols );
+    }
+    @Test
+    public void testCGridCellValue() {
+        System.out.println("testCGridCellValue ---------------------" );
+        grid.setCellValue(0,0,true);
+        assertTrue(   grid.getCellValue(0,0) );
+        assertFalse(  grid.getCellValue(0,1) );
+    }
+    @Test
+    public void testGridRep() {
+        System.out.println("testGridRep ---------------------" );
+        System.out.println(""+grid);
+        assertTrue( grid.toString().startsWith(". . . . ."));
+    }
+    @Test
+    public void testPrintGrid() {
+        System.out.println("testPrintGrid ---------------------" );
+        grid.setCellValue(0,0,true);
+        grid.setCellValue(0,1,true);
+        grid.setCellValue(0,2,true);
+        grid.setCellValue(0,3,true);
+        grid.setCellValue(0,4,true);
+        <span class="comment">//grid.printGrid();</span>
+    }
+}
+
+</code>
  
 
 <h2>Problem analysis</h2>
  
+<img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
 
 <h2>Test plans</h2> 
+
 
 
 <h2>Project</h2> 
@@ -96,11 +220,16 @@ Copy here the EXACT text given by the customer.
 <br/><br/> 	
 </div>  
 
-<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
-By studentName email: alessandro.villani4@studio.unibo.it, 
-<!-- <img src="./img/mbot-S.jpg" alt="mbot" width="15%" height="15%"> -->
-<img src="../img/AlessandroVillani.jpg" alt="emiglio" width="25%" height="25%">
-GIT repo: https://github.com/ale-the-hit-maker/issLab26 
-</div> 
+<div class="footer">
+    <div class="footer-left">
+        <p>By studentName<br>email: <a href="mailto:alessandro.villani4@studio.unibo.it">alessandro.villani4@studio.unibo.it</a></p>
+    </div>
+    <div class="footer-center">
+        <img src="./img/AlessandroVillani.jpg" alt="emiglio">
+    </div>
+    <div class="footer-right">
+        <p>GIT repo:<br><a href="https://github.com/ale-the-hit-maker/issLab26">github.com/ale-the-hit-maker/issLab26</a></p>
+    </div>
+</div>
 </body>
 </html>
