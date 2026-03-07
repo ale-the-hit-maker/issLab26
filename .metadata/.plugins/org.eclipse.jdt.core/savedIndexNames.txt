@@ -1,3 +1,0 @@
-INDEX VERSION 1.134+D:\USERDATA\Documents\GitHub\issLab26\.metadata\.plugins\org.eclipse.jdt.core
-2806433404.index
-1865797976.index
