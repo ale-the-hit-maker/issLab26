@@ -19,5 +19,5 @@
  * [Service Javalin](AService/Sprint1/SistemaSJavalin): framework java/kotlin per implementazione di REST API e Server Web 
  
  ### Sistema ConwayLife con pagine HTML
- * [ConwayLife Sprint3](ConwayLife/Sprint3/conway2626GuiHtml): evoluzione del sistema in locale
+ * [ConwayLife Sprint3](ConwayLife/Sprint3/conway26GuiHtml): evoluzione del sistema in locale
    usando una pagina HTML come dispositivo di I/O. <i>Distribuzione</i>: Docker yaml.
