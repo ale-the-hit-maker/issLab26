@@ -49,8 +49,10 @@
 
 <div class="body"> 
 <h2>Introduction</h2>
- 
- 
+</pre>
+Primo prototipo in Java con dispositivi Mock di I/O.
+</pre>
+
 <h2>Requirements</h2>
 
  
@@ -114,8 +116,14 @@ R2  L’utente umano deve poter:
     // che resetta gli stati dei componenti della griglia, ossia le celle
     // a un valore default, ad esempio tutte le celle morte.
 }</code></pre>
+</div>
 
-	<br><br>
+<h2>Problem analysis</h2>
+ 
+<img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
+
+<h2>Test plans</h2> 
+
 	<p>-------------------------------------------------------------------------</p>
 	<b>Test plan Cell:</b>
 	<br>
@@ -202,26 +210,22 @@ R2  L’utente umano deve poter:
         // grid.printGrid();
     }
 }</code></pre>
-</div>
-
-<h2>Problem analysis</h2>
- 
-<img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
-
-<h2>Test plans</h2> 
-
-
 
 <h2>Project</h2> 
  
  
 
 <h2>Testing</h2> 
- 
+</pre>
+Utilizzo della suite JUnit per testare le classi Cell e Grid, che rappresentano rispettivamente la cella e la griglia del gioco.
+Possibilità di automatizzare i test con gradle. 
+</pre>
 
 <h2>Deployment</h2> 
+</pre>
+Build del progetto con gradle, che genera un file .jar eseguibile.
+</pre>
 
- 
 <h2>Maintenance</h2> 
  
 <!-- USEFUL

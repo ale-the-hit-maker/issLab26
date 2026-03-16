@@ -49,24 +49,78 @@
 
 <div class="body"> 
 <h2>Introduction</h2>
- 
- 
-<h2>Requirements</h2>
+</pre>
+Evoluzione del sistema in locale usando una pagina HTML come dispositivo di I/O.
+</pre>
 
+<h2>Requirements</h2>
  
 <div class="remark">
-Copy here the EXACT text given by the customer.
+<pre>
+R1  Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
+    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
+    evolve come stabilito dallle regole di ConwayLife
+
+R2  L’utente umano deve poter:
+     - specificare la configurazione iniziale della griglia del gioco    
+     - vedere l’evoluzione del gioco in forma opportuna 
+        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
+     - fermare e far ripartire l’evoluzione del gioco
+     - pulire (a gioco fermo) la configurazione della griglia del gioco
+</pre>
 </div>
 
- 
+
 
 <h2>Requirement analysis</h2>
  
+<div class="remark">
 
+	<b>Cosa intende il committente con la parola Cella?</b>
+	<br>
+	<pre><code>public interface ICell {
+    void setStatus(boolean v);
+    // Qualunque cosa sia una cella, esiste solo la rappresentazione della cella
+    
+    boolean isAlive();
+    // La cella come entità ha la capacità di rispondere ad una query,
+    // che mi restituisce un valore, ossia vivo o morto.
+    
+    void switchCellState();
+    // La cella è un ente che ha la capacità di, attraverso questo metodo,
+    // cambiare stato.
+}</code></pre>
+	<br><br>
+
+	<b>Cosa intende il committente con la parola Griglia?</b>
+	<br>
+	<pre><code>public interface IGrid {
+    int getRowsNum();
+    // Per implementare getRowsNum devo conoscere com'è fatta internamente
+    // la griglia, ossia è primitiva.
+    
+    int getColsNum();
+    
+    void setCellValue(int x, int y, boolean state);
+    // Non è un metodo indispensabile, ma è molto comodo avere un metodo
+    // che mi permette di modificare lo stato di una cella.
+    
+    ICell getCell(int x, int y);
+    // è indispensabile avere un metodo che mi restituisce una cella.
+    
+    boolean getCellValue(int x, int y);
+    
+    void reset();
+    // Non è indispensabile, ma può essere opportuno avere un metodo
+    // che resetta gli stati dei componenti della griglia, ossia le celle
+    // a un valore default, ad esempio tutte le celle morte.
+}</code></pre>
+</div>
  
 
 <h2>Problem analysis</h2>
- 
+ <img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
+
 
 <h2>Test plans</h2> 
 
@@ -76,10 +130,16 @@ Copy here the EXACT text given by the customer.
  
 
 <h2>Testing</h2> 
- 
+<pre>
+Utilizzo della suite JUnit per testare le classi Cell e Grid, che rappresentano rispettivamente la cella e la griglia del gioco.
+Possibilità di automatizzare i test con gradle. 
+</pre>
 
 <h2>Deployment</h2> 
-
+</pre>
+Build del progetto con gradle.
+Il deployment dell’applicazione avviene tramite Docker: il servizio è distribuito come container accessibile via rete. 
+</pre>
  
 <h2>Maintenance</h2> 
  
