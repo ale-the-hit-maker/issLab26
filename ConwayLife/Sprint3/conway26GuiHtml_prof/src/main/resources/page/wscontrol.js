@@ -2,12 +2,12 @@
 wscontrol.js
 */
  	var pageId         = "unknown";
-	var cmdMsgTemplate = "msg( eval, dispatch, SENDER, lifectrl, CMD, 0 )"
+	var cmdMsgTemplate = "msg( do, dispatch, SENDER, guiserver, CMD, 0 )"
 	var opened         = false
 	var socketToGui;
 	
 	function sendCmdToServer(cmd) {
-		 //console.log("sendCmdToServer:" + cmd )
+		 console.log("sendCmdToServer:" + cmd + " pageId=" + pageId)
 		 msg = cmdMsgTemplate.replace("CMD", cmd).replace("SENDER",pageId)
 		 //addItem("sendCmdToServer: " + msg + " opened=" + opened);
 		 console.log("sendCmdToServer:" + msg )		 
@@ -17,29 +17,9 @@ wscontrol.js
 				
  function  initWS(){
  /*1*/	  
- 
- /*
-  * ======================================================================
-  * GESTIONE ENDPOINT WEBSOCKET DAL FRONTEND (wscontrol.js)
-  * ======================================================================
-  * Il client JS decide a quale endpoint connettersi in base a come 
-  * viene aperta la pagina HTML nel browser:
-  * * 1. Endpoint "/chat": 
-  * Attivato se l'HTML viene aperto direttamente dal file system 
-  * (es. doppio clic, protocollo file:///). La variabile host è vuota ("").
-  * -> Uso: Solo per test isolati (mock) del frontend senza server web.
-  * * 2. Endpoint "/eval": 
-  * Attivato se l'HTML viene servito dal Web Server Javalin 
-  * (es. http://localhost:8080). La variabile host contiene l'IP/Porta.
-  * -> Uso: È l'endpoint UFFICIALE dell'architettura distribuita.
-  * Qui arrivano i comandi reali del gioco ("ready", "cell(...)", ecc.) 
-  * da inoltrare al LifeController.
-  * ======================================================================
-  */
- 
       console.log("initWS | window.location.host=" + window.location.host );
 	  if( window.location.host =="" ){
-		 socketToGui = new WebSocket("ws://localhost:8080/chat");
+		 socketToGui = new WebSocket("ws://localhost:8080/eval");
 		 console.log("initWS | socketToGuiiii=" + socketToGui );
 		 //socketToGui.send("hello world su chat");
 	  }else{
@@ -48,10 +28,10 @@ wscontrol.js
 	  } 
 
  /*2*/socketToGui.onopen = () => {
-     console.log("initWS | Connesso a eval");
-	 addItem("initWS | Connesso a chat");
-	 opened = true;
-	 sendCmdToServer("ready" );
+	     console.log("initWS | Connesso a eval");
+		 addItem("initWS | Connesso a eval");
+		 opened = true;
+		 sendCmdToServer("ready" );
      }
 
  /*3*/socketToGui.onmessage = (event) => {

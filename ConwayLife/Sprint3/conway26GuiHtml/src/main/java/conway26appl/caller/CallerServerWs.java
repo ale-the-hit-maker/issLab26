@@ -6,6 +6,11 @@ import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.CountDownLatch;
+
+import main.java.conway.domain.GameController;
+import main.java.conway.domain.IGrid;
+import main.java.conway.domain.IOutDev;
+
 import java.net.http.HttpClient;
 //import org.java_websocket.client.WebSocketClient;
 //import org.java_websocket.handshake.ServerHandshake;
@@ -20,20 +25,35 @@ import java.net.http.WebSocket;
  * Usa un CountDownLatch per terminare
  */
 
-public class CallerServerWs  {  
+public class CallerServerWs implements IOutDev {
+	
 	private IApplMessage reqmsg    = CommUtils.buildRequest("clientjava", "eval", "CELL", "server"  );
 	private IApplMessage setctrl   = CommUtils.buildRequest("clientjava", "eval", "setcontroller", "server"  );
+	private GameController controller;
+	
 	// Un latch per evitare che il programma termini prima di ricevere la risposta
 	protected CountDownLatch latch = new CountDownLatch(1); //Inizializzo a 1 perché aspetto UNA risposta dal server
-    protected HttpClient client    = HttpClient.newHttpClient();  
+	
+    protected HttpClient client    = HttpClient.newHttpClient();
+    protected WebSocket websocket;
     protected String name;
     
-    public CallerServerWs( ) throws Exception {
-    	//sendRawMessage( );
-    	sendCellChange( );
+    public CallerServerWs( ) {
+    	HttpClient client = HttpClient.newHttpClient();
+        this.websocket = client.newWebSocketBuilder()
+            .buildAsync(URI.create("ws://localhost:8080/eval"), new WebSocketListener(latch))
+            .join();
+    }
+    
+    public void setController(GameController controller) {
+    	this.controller = controller;
+    }
+    
+    public CountDownLatch getLatch() {
+    	return this.latch;
     }
 
-    protected void sendRawMessage( ) throws InterruptedException {
+   /* protected void sendRawMessage( ) throws InterruptedException {
     	//HttpClient client = HttpClient.newHttpClient();
         
         WebSocket webSocket = client.newWebSocketBuilder()
@@ -51,10 +71,10 @@ public class CallerServerWs  {
         // Aspetta che la connessione venga chiusa o interrotta
         latch.await();
         CommUtils.outred("CallerServerWs | setup1 finito");
-   }     
+   }     */
 
     
-    protected void sendCellChange( ) throws InterruptedException {
+   /* protected void sendCellChange( ) throws InterruptedException {
     	//HttpClient client = HttpClient.newHttpClient();
         
         WebSocket webSocket = client.newWebSocketBuilder()
@@ -70,8 +90,7 @@ public class CallerServerWs  {
 
         // Aspetta che la connessione venga chiusa o interrotta
         latch.await();
-    }     
-    
+    }     */
     
     
     private static class WebSocketListener implements WebSocket.Listener {
@@ -97,6 +116,8 @@ public class CallerServerWs  {
         public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
             CommUtils.outmagenta("CallerServerWs | Messaggio ricevuto dal server: " + data);
             return WebSocket.Listener.super.onText(webSocket, data, last);
+            
+            
             //non fa "nulla" di operativo, ma serve a gestire il flusso dei dati (backpressure).
             /*
              * super.onText(...) dice: "Esegui l'implementazione predefinita prevista dai 
@@ -124,6 +145,10 @@ public class CallerServerWs  {
 				   prima di passare al turno successivo).
  
              */
+            
+            // TODO : classificazione tipologia messaggi + delegazione metodi controller
+            
+            
         }
 
         @Override
@@ -141,11 +166,43 @@ public class CallerServerWs  {
     }
 
     
-  
+    // -------------------------- IOutDev ----------------------------------------------------------------------------
+    
+	@Override
+	public void display(String msg) {
+		// TODO : invio richiesta al serverIo per modifica della GUI
+		
+	}
+
+	@Override
+	public void displayCell(IGrid grid, int x, int y) {
+		// TODO : invio richiesta al serverIo per modifica di una cella nella GUI
+
+        String c56 = reqmsg.toString().replace("CELL", "cell(5,6,1)");
+        CommUtils.outmagenta("CallerServerWs | send " + c56);
+        websocket.sendText(c56, true);
+	}
+
+	@Override
+	public void close() {
+		// TODO : invio richiesta al serverIo per modifica della GUI
+		
+	}
+
+	@Override
+	public void displayGrid(IGrid grid) {
+		// TODO : invio richiesta al serverIo per modifica della GUI
+		
+	}
+    
+	// --------------------------------------------------------------------------------------------------------------
+	
+	
     
     public static void main(String[] args) throws Exception {
     	System.out.println("Java.version="+ System.getProperty("java.version"));
     	CallerServerWs client = new CallerServerWs();
      }
+
 }
 

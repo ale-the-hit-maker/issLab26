@@ -61,7 +61,7 @@ eclipse {
 
 application {
     //Define the main class for the application.
-    mainClassName    = 'conway26appl.MainConwayGui'
+    mainClassName    = 'conwayGuiPageServer.MainConwayGui'
 }
 
 jar {

@@ -117,13 +117,24 @@ public class IoJavalin {
                 try {
                 	IApplMessage m = new ApplMessage(message);
                     CommUtils.outblue("IoJavalin |  eval:" + m.msgContent() );
-                    if( m.msgContent().equals("ready")) { 
-                    	pageCtx = ctx;  //memorizzo connession pagina
+                    
+                    if( m.msgContent().equals("ready")) {
+                    	// TODO : capisci come funziona la sessione
+                    	pageCtx = ctx;  //memorizzo connessione pagina browser
+                    	
+                    	// TODO : memorizzare connessione end-to-end con IOutDev
+                    	
                     }else if( m.msgContent().contains("cell(")) { 
+                    	
                     	//Funziona se arriva da CallerServerWs es. cell(5,6,1)
                     	pageCtx.send( m.msgContent()); 
-                    	//TODO: inviare a LifeController
-                    }else ctx.send(m.msgContent());
+                    	// TODO : inviare a LifeController
+                    	
+                    }else {
+                    	// TODO : controlla se ci possono essere altri tipi di messaggi
+                    	ctx.send(m.msgContent());
+                    }
+                    
                 }catch(Exception e) {
                 	CommUtils.outred("IoJavalin |  error:" + e.getMessage());
                 }               
