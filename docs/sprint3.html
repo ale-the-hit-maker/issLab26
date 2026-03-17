@@ -49,9 +49,11 @@
 
 <div class="body"> 
 <h2>Introduction</h2>
+<div class="remark">
 </pre>
 Evoluzione del sistema in locale usando una pagina HTML come dispositivo di I/O.
 </pre>
+</div>
 
 <h2>Requirements</h2>
  
@@ -59,7 +61,7 @@ Evoluzione del sistema in locale usando una pagina HTML come dispositivo di I/O.
 <pre>
 R1  Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
     Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
-    evolve come stabilito dallle regole di ConwayLife
+    evolve come stabilito dalle regole di ConwayLife
 
 R2  L’utente umano deve poter:
      - specificare la configurazione iniziale della griglia del gioco    
@@ -67,6 +69,24 @@ R2  L’utente umano deve poter:
         (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
      - fermare e far ripartire l’evoluzione del gioco
      - pulire (a gioco fermo) la configurazione della griglia del gioco
+
+R3  Dotare il gioco Life. di una pagina HTML come dispositivo di I/O
+
+R4  La pagina deve costituire un componente esterno alla applicazione Java, ossia deve essere possibile aprire più pagine HTML
+    collegate allo stesso gioco, e tutte le pagine devono essere aggiornate in tempo reale
+
+R5  Il gestore del gioco sarà l’utente che ha aperto per primo (owner) una pagina HTML collegata al gioco.
+    In altre parole, solo la pagina dell’owner avrà pulsanti di comando START/STOP/CLEAN/EXIT attivi
+
+R6  La pagina HTML deve essere aggiornata in modo automatico man mano il gioco procede
+
+R7  Un utente non owner che si collega mentre il gioco è in corso, dovrebbe vedere lo stato attuale della griglia in
+    modo corretto
+
+R8  Opzionalmente: la pagina HTML deve indicare se il gioco continua anche nel caso di griglia vuota o di configurazione stabile
+
+R9  Il deployment del gioco deve avvenire mediante Docker.
+
 </pre>
 </div>
 
@@ -75,51 +95,12 @@ R2  L’utente umano deve poter:
 <h2>Requirement analysis</h2>
  
 <div class="remark">
-
-	<b>Cosa intende il committente con la parola Cella?</b>
-	<br>
-	<pre><code>public interface ICell {
-    void setStatus(boolean v);
-    // Qualunque cosa sia una cella, esiste solo la rappresentazione della cella
-    
-    boolean isAlive();
-    // La cella come entità ha la capacità di rispondere ad una query,
-    // che mi restituisce un valore, ossia vivo o morto.
-    
-    void switchCellState();
-    // La cella è un ente che ha la capacità di, attraverso questo metodo,
-    // cambiare stato.
-}</code></pre>
-	<br><br>
-
-	<b>Cosa intende il committente con la parola Griglia?</b>
-	<br>
-	<pre><code>public interface IGrid {
-    int getRowsNum();
-    // Per implementare getRowsNum devo conoscere com'è fatta internamente
-    // la griglia, ossia è primitiva.
-    
-    int getColsNum();
-    
-    void setCellValue(int x, int y, boolean state);
-    // Non è un metodo indispensabile, ma è molto comodo avere un metodo
-    // che mi permette di modificare lo stato di una cella.
-    
-    ICell getCell(int x, int y);
-    // è indispensabile avere un metodo che mi restituisce una cella.
-    
-    boolean getCellValue(int x, int y);
-    
-    void reset();
-    // Non è indispensabile, ma può essere opportuno avere un metodo
-    // che resetta gli stati dei componenti della griglia, ossia le celle
-    // a un valore default, ad esempio tutte le celle morte.
-}</code></pre>
+	" "
 </div>
  
 
 <h2>Problem analysis</h2>
- <img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
+ <img src="./img/AnalisiDelProblema_s3.png" alt="Problem Analysis" width="40%" height="40%">
 
 
 <h2>Test plans</h2> 
@@ -129,18 +110,21 @@ R2  L’utente umano deve poter:
  
  
 
-<h2>Testing</h2> 
+<h2>Testing</h2>
+<div class="remark">
 <pre>
-Utilizzo della suite JUnit per testare le classi Cell e Grid, che rappresentano rispettivamente la cella e la griglia del gioco.
-Possibilità di automatizzare i test con gradle. 
+Utilizzo della suite JUnit e possibilità di automatizzare i test con gradle. 
 </pre>
+</div>
 
-<h2>Deployment</h2> 
+<h2>Deployment</h2>
+<div class="remark">
 <pre>
 Build del progetto con gradle.
 Il deployment dell' applicazione avviene tramite Docker: il servizio è distribuito come container accessibile via rete. 
 </pre>
- 
+</div>
+
 <h2>Maintenance</h2> 
  
 <!-- USEFUL

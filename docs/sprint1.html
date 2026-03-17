@@ -49,18 +49,19 @@
 
 <div class="body"> 
 <h2>Introduction</h2>
-</pre>
+<div class="remark">>
+<pre>
 Primo prototipo in Java con dispositivi Mock di I/O.
 </pre>
+</div>
 
 <h2>Requirements</h2>
 
- 
 <div class="remark">
 <pre>
 R1  Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
     Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
-    evolve come stabilito dallle regole di ConwayLife
+    evolve come stabilito dalle regole di ConwayLife
 
 R2  L’utente umano deve poter:
      - specificare la configurazione iniziale della griglia del gioco    
@@ -120,10 +121,10 @@ R2  L’utente umano deve poter:
 
 <h2>Problem analysis</h2>
  
-<img src="./img/AnalisiDelProblema.png" alt="Problem Analysis" width="40%" height="40%">
+<img src="./img/AnalisiDelProblema_s0.png" alt="Problem Analysis" width="40%" height="40%">
 
 <h2>Test plans</h2> 
-
+<div class="remark">
 	<p>-------------------------------------------------------------------------</p>
 	<b>Test plan Cell:</b>
 	<br>
@@ -210,21 +211,26 @@ R2  L’utente umano deve poter:
         // grid.printGrid();
     }
 }</code></pre>
+</div>
 
 <h2>Project</h2> 
  
  
 
-<h2>Testing</h2> 
-</pre>
+<h2>Testing</h2>
+<div class="remark">
+<pre>
 Utilizzo della suite JUnit per testare le classi Cell e Grid, che rappresentano rispettivamente la cella e la griglia del gioco.
 Possibilità di automatizzare i test con gradle. 
 </pre>
+</div>
 
 <h2>Deployment</h2> 
-</pre>
+<div class="remark">
+<pre>
 Build del progetto con gradle, che genera un file .jar eseguibile.
 </pre>
+</div>
 
 <h2>Maintenance</h2> 
  
