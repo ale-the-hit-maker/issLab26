@@ -7,41 +7,7 @@
 <link rel="stylesheet" type="text/css" href="./css/styles.css">
 </head>
     
- 
-   
-</head>
-	
-		
-  
 
-
-   
-<title>TemplateToFill</title></head>
-    
-<!--
-	<body onload="loadNav();">
-		<div id="openButton" class="openButton" onclick="openNav(true)">&#9776; Menu</div>
-		<div id="sidenav" class="sidenav">
-			<a class="closeButton" href="javascript:void(0)" onclick="closeNav(true)">&times;</a>
-			<a href=".README.html">ReadMe</a>
-			<a class="sprint" href="../../../Sprint0/Codice/userDocs/Cold%20Storage%20Service%20-%20Natali%20V3.html">Sprint0</a>
-			<a class="sprint" href="../../../Sprint1.0/Codice/userDocs/Sprint%201.0%20-%20V3.html">Sprint1.0</a>
-			<a class="sprint" href="../../../Sprint1.1/Codice/userDocs/Sprint%201.1%20-%20V3.html">Sprint1.1</a>
-			<a id="currentSprint" class="sprint" href="#">&#8211;&#8212; Sprint2 &#8212;&#8211;</a>
-			<div class="sidenavSection">
-				<a href="#Goal Sprint 2">Goal Sprint 2</a>
-				<a href="#Requisiti">Requisiti</a>
-				<a href="#Analisi dei Requisiti">Analisi dei Requisiti</a>
-				<a href="#Analisi del Problema">Analisi del Problema</a>
-				<a href="#Test Plan">Test Plan</a>
-				<a href="#Progettazione">Progettazione</a>
-				<a href="#Deployment">Deployment</a>
-			</div>
-			<p class="separator">&mdash;&mdash;&mdash;&ndash;&ndash;&mdash;&mdash;&mdash;</p>
-			<a class="sprint" href="../../../Sprint3/Codice/userDoc/Sprint%203.html">Sprint3</a>
-			<bottom-spacer/>
-		</div>
--->
 <body>
 <div id="top">
 <h1>LABORATORIO DI INGEGNERIA DEI SISTEMI SOFTWARE <font size="5"></font> </h1>
@@ -51,7 +17,16 @@
 <h2>Introduction</h2>
 <div class="remark">
 </pre>
-Evoluzione del sistema in locale usando una pagina HTML come dispositivo di I/O.
+Goal Sprint3: Realizzazione in Java del Game of Life di Conway, con GUI del gioco mediante pagina Web.
+Risultato dello Sprint2: è stato realizzato un sistema (deployed in un file conway26Java-1.0.jar) che contiene un
+insieme di interfacce e classi organizzate nella seguente architettura.
+
+<img src="./img/IntroduzioneSprint3.png" alt="Problem Analysis Sprint2" width="40%" height="40%">
+
+Questo sistema costituisce il punto di partenza per lo sviluppo dello Sprint3.
+
+Evoluzione del sistema da gui locale a gui distribuita usando una pagina HTML come dispositivo di I/O.
+
 </pre>
 </div>
 
@@ -59,33 +34,29 @@ Evoluzione del sistema in locale usando una pagina HTML come dispositivo di I/O.
  
 <div class="remark">
 <pre>
-R1  Realizzare una versione in Java del gioco Life di Conway, come gioco zero-player. 
-    Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
-    evolve come stabilito dalle regole di ConwayLife
 
-R2  L’utente umano deve poter:
-     - specificare la configurazione iniziale della griglia del gioco    
-     - vedere l’evoluzione del gioco in forma opportuna 
-        (si veda <a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.6.3'>Problema della vista del gioco</a> )
-     - fermare e far ripartire l’evoluzione del gioco
-     - pulire (a gioco fermo) la configurazione della griglia del gioco
 
-R3  Dotare il gioco Life. di una pagina HTML come dispositivo di I/O
+• specificare la configurazione iniziale della griglia del gioco
 
-R4  La pagina deve costituire un componente esterno alla applicazione Java, ossia deve essere possibile aprire più pagine HTML
-    collegate allo stesso gioco, e tutte le pagine devono essere aggiornate in tempo reale
+• vedere l’evoluzione del gioco in forma opportuna : In particolare, il committente desidera che la vista del gioco (e la configurazione iniziale) sia realizzata mediante una
+pagina HTML
 
-R5  Il gestore del gioco sarà l’utente che ha aperto per primo (owner) una pagina HTML collegata al gioco.
-    In altre parole, solo la pagina dell’owner avrà pulsanti di comando START/STOP/CLEAN/EXIT attivi
+• fermare e far ripartire l’evoluzione del gioco
 
-R6  La pagina HTML deve essere aggiornata in modo automatico man mano il gioco procede
+• pulire (a gioco fermo) la configurazione della griglia del gioco
 
-R7  Un utente non owner che si collega mentre il gioco è in corso, dovrebbe vedere lo stato attuale della griglia in
-    modo corretto
+• la pagina deve costituire un componente che si relazione conl’applicazione secondo la architettura riportata in
+IoJavalin integrato oppure secondo la architettura riportata in IoJavalin esterno alla applicazione
 
-R8  Opzionalmente: la pagina HTML deve indicare se il gioco continua anche nel caso di griglia vuota o di configurazione stabile
+• il gestore del gioco sarà l’utente che ha aperto per primo (owner) una pagina HTML collegata al gioco. In altre
+parole, solo la pagina dell’owner avrà pulsanti di comando START/STOP/CLEAN/EXIT attivi
 
-R9  Il deployment del gioco deve avvenire mediante Docker.
+• la pagina HTML deve essere aggiornata in modo automatico man mano il gioco procede
+
+• un utente non owner che si collega mentre il gioco è in corso, dovrebbe vedere lo stato attuale della griglia in
+modo corretto
+
+• il deployment del gioco deve avvenire mediante Docker
 
 </pre>
 </div>
@@ -100,14 +71,70 @@ R9  Il deployment del gioco deve avvenire mediante Docker.
  
 
 <h2>Problem analysis</h2>
+
+<pre>
+<strong>STRUTTURA</strong>
+Affrontiamo qui lo scenario Javalin esterno, in quanto propedeutico ai sistemi software basati su microservizi.
+Si tratta di realizzare un sistema distribuito, in cui
+1. una parte dei sistema (la erogazione di una pagina HTML, in breve GUI) è del tutto nuova (si veda Job1) rispetto
+allo Sprint2
+2. una parte del sistema (l’applicazione) è già disponibile e deve essere solo ‘adattata’ a interagire con la GUI (si
+veda Job2)
+
+
  <img src="./img/AnalisiDelProblema_s3.png" alt="Problem Analysis" width="40%" height="40%">
 
+<strong>INTERAZIONE</strong>
+
+ciascun componente di un sistema distribuito deve avere un nome.
+Dunque:
+• alla applicazione diamo il nome: lifectrl
+• al componente che include iojavalin diamo il nome: guiserver
+
+Per quanto detto nella analsi dei requisti, il primo prototipo adotta le WebSocket come tecnologia per le comunicazioni
+tra i componenti.
+
+Dunque, lifectrl si deve manifestare al guiserver aprendo una connessione via webseocket sulla porta 8080. Ciò
+implica che il guiserver debba gestire in modo opportuno almeno due connessioni:
+• la connessione con la pagina owner, che denotiamo con pageCtx
+• la connessione con l’applicazione, che denotiamo con lifeCtrlCtx
+
+
+1] ANALISI DELLE COMUNICAZIONI SERVER-PAGINA
+
+2] ANALISI DELLE COMUNICAZIONI SERVER-APPLICAZIONE
+
+
+</pre>
 
 <h2>Test plans</h2> 
-
+<pre>
+	Benchè sia difficile definire test automatizzabili per applicazioni che implicano GUI, una volta specificate le forme di
+interazione tra i componenti, si possono impostare TestUnit quali:
+• invio di un comando, come fatto in CallerServerInteraction, facendo asserzioni sul risultato atteso 
+</pre>
 
 <h2>Project</h2> 
- 
+ <pre>
+Tenendo conto di quanto detto dall’analisi, a livello di progettazione dobbiamo innanzi tutto:
+
+1. impostare il codice Javscritpt che interpreta i messaggi descritti in Analisi delle comunicazioni server-pagina. A
+questo fine definiamo il file
+• wscanvascontrol.js per pagine che impostano Una griglia globale (con canvas)
+• wscontrol.js per pagine che impostano Una griglia granulare
+
+2. completare il codice di OutInGuiInteraction introdotto in Analisi delle comunicazioni server applicazione
+
+3. approfondire la problematica Aggiornamento della grid in GUI e prendere una decisione motivata se usare diapatch o request
+
+Occorre anche realizzare il seguente requisito:
+un utente non owner che si collega mentre il gioco è in corso, dovrebbe vedere lo stato attuale della griglia in modo
+corretto
+Key point: impostare una funzione nel server che invvii informazione su tutte le connessioni WS attive.
+
+
+
+ </pre>
  
 
 <h2>Testing</h2>

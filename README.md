@@ -15,6 +15,7 @@
    in Java con dispositivi Mock di I/O. <i>Distribuzione</i>: file jar.
  * [ConwayLife Sprint2](ConwayLife/Sprint2/conway26Java): <b>evoluzione</b> del primo prototipo
    con un dispositivo di output realizzato in Swing. <i>Distribuzione</i>: file jar
+   
  ### Sistemi come servizi
  * [Service Javalin](AService/Sprint1/SistemaSJavalin): framework java/kotlin per implementazione di REST API e Server Web 
  
