@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDR System</title>
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+    
+
+<body>
+<div id="top">
+<h1>LABORATORIO DI INGEGNERIA DEI SISTEMI SOFTWARE <font size="5"></font> </h1>
+</div>  
+
+<div class="body"> 
+<h2>Introduction</h2>
+<div class="remark">
+</pre>
+    Sistema software che comanda un Differential Drive Robot (DDR).
+
+</pre>
+</div>
+
+<h2>Requirements</h2>
+ 
+<div class="remark">
+<pre>
+
+
+Costruire un sistema software che comanda un Differential Drive Robot (DDR) in modo che, 
+partendo dalla posizione iniziale HOME, il robot si sposti lungo il perimetro di una stanza rettangolare vuota. 
+Il DDR si deve fermare quando tornato in HOME.
+
+Il DDR è anche sensibile ai dati rilevati da un Radar.
+Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefissata ``DMIN``:
+  
+  - se il DDR si sta muovendo , il DDR si ferma fino a che il Radar non rileva più un 'intruso' così vicino 
+  - se il DDR è fermo in HOME, il DDR ruota su sè stesso fino a che un 'intruso' così vicino scompare
+
+
+</pre>
+</div>
+
+
+
+<h2>Requirement analysis</h2>
+ 
+<div class="remark">
+<pre>
+
+    Area -> insieme di punti che costituiscono la stanza rettangolare vuota, modellata come una coppia di variabili intere positive che rappresentano la lunghezza e la larghezza dell'Area
+    Perimetro -> insieme di lati di un'Area
+
+    DDR -> Il robot è modellato come un <a href="https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#page=186" target="_blank">QActor</a>, in quanto deve essere in grado di eseguire azioni e reagire ad eventi esterni in modo proattivo.
+        
+        Comportamento:
+
+        - Il "DDR" si muove lungo il "Perimetro" di un "Area" rettangolare
+        - Il "DDR" parte da una posizione iniziale "HOME" e si ferma quando ritorna in essa
+        - Il "DDR" è in grado di comunicare con il "Radar" per ricevere informazioni sulla presenza di "Intrusi" nell'"Area"
+
+        Comunicazione:
+
+        - Nel caso in cui riceve un segnale dal "Radar" che indica la presenza di un "Intruso" a distanza minore di "DMIN":
+
+            a) Se è in movimento -> si ferma e attende fin quando non riceve una comunicazione dal "Radar" che indica l'assenza di "Intrusi" vicini (distanza > DMIN)
+            b) Se è fermo in "HOME" -> ruota su sé stesso fin quando non riceve una comunicazione dal "Radar" che indica l'assenza di "Intrusi" vicini (distanza > DMIN)
+
+    HOME -> posizione iniziale del DDR lungo il perimetro dell'Area, rappresentata da una coppia di coordinate intere (x,y) >= 0
+
+    Radar -> Il radar è modellato come un QActor, che simula la presenza di Intrusi nell'Area e avvisa il DDR in caso siano ad una distanza minore di DMIN.
+        
+        Comportamento:
+        
+        - Il "Radar" rileva la presenza di "Intrusi" all'interno dell'"Area"
+        - Il "Radar" calcola la distanza tra ogni "Intruso" rilevato e il "DDR"
+        - Il "Radar" è in grado di comunicare con il "DDR" per segnalare la presenza o l'assenza di "Intrusi" a distanza minore di "DMIN"
+
+        Comunicazione:
+
+        - Invia una comunicazione al DDR quando rileva un "Intruso" a distanza minore di "DMIN"
+        - Invia una comunicazione al DDR quando un "Intruso" a distanza minore di "DMIN" scompare (distanza > DMIN)
+
+    Intruso -> modellato come una coppia di coordinate intere (x,y) >= 0 che rappresentano la posizione dell'intruso all'interno dell'Area
+    DMIN -> distanza minima positiva a cui il Radar segnala al DDR presenza di un intruso
+
+
+</pre>
+</div>
+ 
+
+<h2>Problem analysis</h2>
+
+<pre>
+<strong>STRUTTURA</strong>
+
+
+<!-- <img src="./img/AnalisiDelProblema_s3.png" alt="Problem Analysis" width="40%" height="40%">
+-->
+
+<strong>INTERAZIONE</strong>
+
+
+...
+
+1] ANALISI DELLE COMUNICAZIONI
+
+
+
+</pre>
+
+<h2>Test plans</h2> 
+<pre>
+
+</pre>
+
+<h2>Project</h2> 
+ <pre>
+
+
+
+ </pre>
+ 
+
+<h2>Testing</h2>
+<div class="remark">
+<pre>
+Utilizzo della suite JUnit e possibilità di automatizzare i test con gradle. 
+</pre>
+</div>
+
+<h2>Deployment</h2>
+<div class="remark">
+<pre>
+Build del progetto con gradle.
+Il deployment dell' applicazione avviene tramite Docker: il servizio è distribuito come container accessibile via rete. 
+</pre>
+</div>
+
+<h2>Maintenance</h2> 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div class="footer">
+    <div class="footer-left">
+        <p>By studentName<br>email: <a href="mailto:alessandro.villani4@studio.unibo.it">alessandro.villani4@studio.unibo.it</a></p>
+    </div>
+    <div class="footer-center">
+        <img src="./img/AlessandroVillani.jpg" alt="emiglio">
+    </div>
+    <div class="footer-right">
+        <p>GIT repo:<br><a href="https://github.com/ale-the-hit-maker/issLab26">github.com/ale-the-hit-maker/issLab26</a></p>
+    </div>
+</div>
+</body>
+</html>
