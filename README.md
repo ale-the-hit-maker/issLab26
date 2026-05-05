@@ -24,6 +24,6 @@
    usando una pagina HTML come dispositivo di I/O. <i>Distribuzione</i>: Docker yaml.
 
  ### Sistema ConwayLife con pagine Qactors e protoccolo MQTT
- * [ConwayLife Sprint4](conway26demodemoqak): evoluzione del sistema con nuovo protoccollo di comunicazione e nuove entità attori
+ * [ConwayLife Sprint4](ConwayLife/Sprint4/conway26demodemoqak): evoluzione del sistema con nuovo protoccollo di comunicazione e nuove entità attori
 
  
