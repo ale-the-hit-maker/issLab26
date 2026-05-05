@@ -6,7 +6,7 @@
 
  <h2 id="ParteA">Parte A: Dai programmi ai Sistemi a Microservizi</h2>
 
- ### Sprint content index
+ ### Projects Index
  * [index](https://ale-the-hit-maker.github.io/issLab26/)
 
  ### Sistema ConwayLife in locale
@@ -22,3 +22,8 @@
  ### Sistema ConwayLife con pagine HTML
  * [ConwayLife Sprint3](ConwayLife/Sprint3/conway26GuiHtml_prof): evoluzione del sistema in locale
    usando una pagina HTML come dispositivo di I/O. <i>Distribuzione</i>: Docker yaml.
+
+ ### Sistema ConwayLife con pagine Qactors e protoccolo MQTT
+ * [ConwayLife Sprint4](conway26demodemoqak): evoluzione del sistema con nuovo protoccollo di comunicazione e nuove entità attori
+
+ 
